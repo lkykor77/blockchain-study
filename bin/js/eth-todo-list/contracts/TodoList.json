@@ -1,0 +1,112 @@
+{
+    "contractName": "TodoList",
+    "abi": [],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"d:/Project/blockchain-study/js/eth-todo-list/contracts/TodoList.sol\":\"TodoList\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"d:/Project/blockchain-study/js/eth-todo-list/contracts/TodoList.sol\":{\"keccak256\":\"0xbc87d6334ece58808b94642e994395b3a007c0aa99f34faca64b304fac5f4d2a\",\"urls\":[\"bzz-raw://520b0a963b7ac547679e08a6da9f59a0d5ad6eb2e2dadb3c26af82c29834714a\",\"dweb:/ipfs/QmXXfYbrvP9iMdgVXmuzQVH9fzUn52mbAPmb9HuPZDipNR\"]}},\"version\":1}",
+    "bytecode": "608060405260008055348015601357600080fd5b50603f8060216000396000f3fe6080604052600080fdfea2646970667358221220955a951511375215328909d659118e117df31062f1eac24500886b9faa846daf64736f6c634300080b0033",
+    "deployedBytecode": "6080604052600080fdfea2646970667358221220955a951511375215328909d659118e117df31062f1eac24500886b9faa846daf64736f6c634300080b0033",
+    "sourceMap": "36:50:0:-:0;;;81:1;61:21;;36:50;;;;;;;;;;;;;;;;",
+    "deployedSourceMap": "36:50:0:-:0;;;;;",
+    "sourcePath": "d:/Project/blockchain-study/js/eth-todo-list/contracts/TodoList.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.11+commit.d7f03943"
+    },
+    "ast": {
+        "absolutePath": "d:/Project/blockchain-study/js/eth-todo-list/contracts/TodoList.sol",
+        "exportedSymbols": {
+            "TodoList": [
+                5
+            ]
+        },
+        "id": 6,
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1,
+                "literals": [
+                    "solidity",
+                    ">=",
+                    "0.4",
+                    ".22",
+                    "<",
+                    "0.9",
+                    ".0"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "0:32:0"
+            },
+            {
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "TodoList",
+                "contractDependencies": [],
+                "contractKind": "contract",
+                "fullyImplemented": true,
+                "id": 5,
+                "linearizedBaseContracts": [
+                    5
+                ],
+                "name": "TodoList",
+                "nameLocation": "45:8:0",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "constant": false,
+                        "id": 4,
+                        "mutability": "mutable",
+                        "name": "taskCount",
+                        "nameLocation": "69:9:0",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 5,
+                        "src": "61:21:0",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                        },
+                        "typeName": {
+                            "id": 2,
+                            "name": "uint256",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "61:7:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                            }
+                        },
+                        "value": {
+                            "hexValue": "30",
+                            "id": 3,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "number",
+                            "lValueRequested": false,
+                            "nodeType": "Literal",
+                            "src": "81:1:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                            },
+                            "value": "0"
+                        },
+                        "visibility": "internal"
+                    }
+                ],
+                "scope": 6,
+                "src": "36:50:0",
+                "usedErrors": []
+            }
+        ],
+        "src": "0:88:0"
+    },
+    "functionHashes": {},
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "12600",
+            "executionCost": "5072",
+            "totalCost": "17672"
+        }
+    }
+}
