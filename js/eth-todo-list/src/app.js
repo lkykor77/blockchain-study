@@ -56,6 +56,7 @@ App = {
   loadContract: async () => {
     // Create a JavaScript version of the smart contract
     const todoList = await $.getJSON("TodoList.json"); // TodoList.json -> sol파일을 컴파일한 자바스크립트 바이트코드
+
     App.contracts.TodoList = TruffleContract(todoList); // TruffleContract 함수를 이용해서 뭔가를 만듬 -> 공부 필요
     App.contracts.TodoList.setProvider(App.web3Provider); // setProvider 호출 -> 공부 필요
 
