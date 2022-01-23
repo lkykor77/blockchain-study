@@ -58,10 +58,13 @@ App = {
     const todoList = await $.getJSON("TodoList.json"); // TodoList.json -> sol파일을 컴파일한 자바스크립트 바이트코드
 
     App.contracts.TodoList = TruffleContract(todoList); // TruffleContract 함수를 이용해서 뭔가를 만듬 -> 공부 필요
+
     App.contracts.TodoList.setProvider(App.web3Provider); // setProvider 호출 -> 공부 필요
 
     // Hydrate the smart contract with values from the blockchain
     App.todoList = await App.contracts.TodoList.deployed(); // TodoList를 deployed를 하는데 왜 가니슈에서 블록이 안생기는지 공부 필요
+    console.log(await App.contracts.TodoList.detectNetwork());
+    console.log(App.contracts.TodoList.network);
   },
 
   render: async () => {
