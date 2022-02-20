@@ -63,6 +63,7 @@ App = {
 
     // Hydrate the smart contract with values from the blockchain
     App.todoList = await App.contracts.TodoList.deployed(); // TodoList를 deployed를 하는데 왜 가니슈에서 블록이 안생기는지 공부 필요
+    //App.todoList = await App.contracts.TodoList.new();
     console.log(await App.contracts.TodoList.detectNetwork());
     console.log(App.contracts.TodoList.network);
   },
