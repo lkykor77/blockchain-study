@@ -66,10 +66,12 @@ App = {
 
     console.log(await App.contracts.TodoList.detectNetwork());
     console.log(App.contracts.TodoList.network.address);
+    /*
     App.todoList = await App.contracts.TodoList.new({
       from: App.contracts.TodoList.network.address,
       to: "0xcD045015674341DE22dFE83262e0B85E8668dD2C",
     });
+    */
   },
 
   render: async () => {
