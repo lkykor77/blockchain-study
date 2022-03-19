@@ -34,7 +34,4 @@ contract ZombieFactory {
 }
 
 /**
-    1. _createZombie() 함수를 private에서 internal로 바꾸어 선언하여 
-    이 함수가 정의된 컨트랙트를 상속하는 컨트랙트에서도 접근 가능하도록 한다.
-
  */
