@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.8.13;
 
 import "./zombiefactory.sol";
 
