@@ -38,4 +38,4 @@ contract ZombieFactory {
             ownerZombieCount[msg.sender]++;   // 키값이 address(lee), 내것처음이면 나의 ownerZombieCount=1, 다른 사람이 7개 좀비 있다면 7
             emit NewZombie(id, _name, _dna); // id= 좀비 어레이 안의 인덱스 숫자로 가져간다. 내 좀비가 어레이에서 11번째라면 그것의 인덱스는 10
     }
-    
+}

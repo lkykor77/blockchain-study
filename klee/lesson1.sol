@@ -35,6 +35,7 @@ contract ZombieFactory {
     // 키가 address 이게 맞다면, 키에 데한 value uint 가져온다 
 
 
+// solidity 문서, push 했었을때 자동적으로 리턴값이. array 의 length, 첫번째 좀비를 넣는다면 그것은 zombies array 의 length = 1, 1-1=0. 그걸 id로 쓴다
     function _createZombie(string memory _name, uint _dna) internal {                              
             uint id = zombies.push(Zombie(_name, _dna)) - 1; 
             zombieToOwner[id] = msg.sender;   // 이미 10개좀비 있는 array에 내것 push 하면
@@ -128,7 +129,15 @@ contract ZombieFactory {
 pragma solidity >=0.5.0 <0.6.0;
 import "./zombiefactory.sol";
 
+// external : 다른계약에서 호출을 하는 함수. 내부에서는 호출이 불가능. 외부에서만 호출. 
+// public: 내부, 외부 다 호출 가능 
+// 인터페이스: 우리가 만든게 아니고, 크립토키티에서 만든 함수. 동일하게 적어줘야 한다. getkitty 라는 함수를 이렇게 만들었다. 
+// 인터페이스: 
+// 기본 함수는 {} 중가로 있다. 이게 function 의 body, 몸체. 다른 계약에서 사용하는 것을 쓰는 인터페이스 만들때는 body 없이 {} 없이 만들어야 된다. 
 
+// 컴파일러가, 이걸 컴퓨터가 알아먹을 수 있게 한다. 
+
+// 리턴하는게 없으면 () 필요없다 
 contract KittyInterface {
   function getKitty(uint256 _id) external view returns (
     bool isGestating,
@@ -160,6 +169,9 @@ address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
   KittyInterface kittyContract = KittyInterface(ckAddress);
 
 
+// 리턴은, 값을 사용할대만 필요 
+// memory = 템프처럼, db 에 저장 안한다. 메모리에 잠깐 저장 
+// 밖에서 이걸 호출할때 뭘 넣지를 모르지만, 만약 kitty 라는 species 있으면, 그 dna 뒤값 99로 명확하게 해주낟. 
   function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
       require(msg.sender == zombieToOwner[_zombieId]);  // zombietoowner (uint->address). 호출자가 이 zombieid, targetdna 값을 넣었을때 그것으로 실행된다 
       Zombie storage myZombie = zombies[_zombieId]; 
@@ -168,6 +180,7 @@ address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
       // myzombie.dna 가 Zombie 구조체 (name, dna) 로 값이 저장된다 
     _targetDna = _targetDna % dnaModulus;   // 16 digit 으로 만든다 
     uint newDna = (myZombie.dna + _targetDna) / 2;    // 새로운 dna 값은 내 좀비의 dna 값과 타겟의 평균 
+
     // Add an if statement here
     if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {   // string으로 했을때 해쉬값의 _species=="kitty" 일때
       newDna = newDna - newDna % 100 + 99;   // 새로운 dna 뒤에 99 창조. Assume newDna 334455. newDna % 100 = 55. so newDna - (newDna % 100) =334400. Finally add 99 to get 334499.
@@ -176,6 +189,11 @@ address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
     _createZombie("NoName", newDna);    //    이 새로운 좀비 이름 "" 해줘서 string name, uint newDna 포멧
   }
   
+  // 밖에서도 호출 가능. 수정 아님. 
+  // feedonkitty 함수 호출하는 당사자가 넣어주는 unint 값이 _kittyid
+  // multiple assignemnt 
+
+  // kittycontract 는 이 함수 function 바깥에 있는데, 그걸 어떻게 호출 가능한지?
   function feedOnKitty(uint _zombieId, uint _kittyId) public {
     uint kittyDna;
     (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
