@@ -18,11 +18,19 @@ contract KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
-    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
+      // 1. Remove this:
+    // address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
     // `ckAddress`를 이용하여 여기에 kittyContract를 초기화한다.
 
-    KittyInterface kittyContract = KittyInterface(ckAddress);
+  // 2. Change this to just a declaration:
+    // KittyInterface kittyContract = KittyInterface(ckAddress);
+    KittyInterface kittyContract
 
+      // 3. Add setKittyContractAddress method here
+  function setKittyContractAddress(address _address) external {
+    kittyContract = KittyInterface(_address);
+  }
+  
     function feedAndMultiply(uint _zombieId, uint _targetDna, string _species) public {
         require(msg.sender == zombieToOwner[_zombieId]);
         Zombie storage myZombie = zombies[_zombieId];
