@@ -47,6 +47,14 @@ contract ZombieFeeding is ZombieFactory {
     // KittyInterface kittyContract = KittyInterface(ckAddress);
     KittyInterface kittyContract
 
+  // adv solidity: ch6,  1. Create modifier here
+
+  // CHANGE THE MODIFIER from 'ownerof' to 'onlyOwnerof'
+   modifier onlyOwnerOf(uint _zombieId) {
+      require(msg.sender == zombieToOwner[_zombieId]);
+      _;
+    }
+
       // 3. Add setKittyContractAddress method here
   //Now we can restrict access to setKittyContractAddress so that no one but us can modify it in the future.
 /*
@@ -86,8 +94,11 @@ Thus ZombieFeeding is also Ownable, and can access the functions / events / modi
 
 // adv solidity concepts, ch7
 // make the function internal = contract more secure. don't want users to be able to call this function with any DNA they want
-    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {
-      require(msg.sender == zombieToOwner[_zombieId]);  // zombietoowner (uint->address). 호출자가 이 zombieid, targetdna 값을 넣었을때 그것으로 실행된다 
+//  // 2. Add modifier to function definition:
+          // CHANGE THE NAME 'ownerOf' to 'onlyOwnerof', refactoring, because ERC721 contract uses the name 'ownerof'
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal onlyOwnerOf(_zombieId) {
+      // 3. Remove this line
+    //require(msg.sender == zombieToOwner[_zombieId]);  // zombietoowner (uint->address). 호출자가 이 zombieid, targetdna 값을 넣었을때 그것으로 실행된다 
       Zombie storage myZombie = zombies[_zombieId];     
       // Zombie (구조체, struct) storage, 구조체 이름이 myZombie = zombies 배열 array [808]이면 최소 좀비가 809명있다. 808번째에 있는 내 진짜 좀비를 받는다. 원본을 바꾸고 싶으면 storage로 한다. 
       // myzombie 변수이다.

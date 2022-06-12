@@ -21,6 +21,16 @@ contract ZombieFactory {
         uint32 readyTime; // adv solidity, ch4, gas, cluster same 32bit data types together. 
         // readyTime = implement a cooldown timer to limit how often a zombie can feed
         // regular uint costs 256 bits
+
+        // keep track of how many battles our zombies have won and lost.
+        // Note: Remember, since we can pack uints inside structs, we want to use the smallest uints we can get away with. A uint8 is too small, since 2^8 = 256 — if our zombies attacked once per day, they could overflow this within a year. But 2^16 is 65536 — so unless a user wins or loses every day for 179 years straight, we should be safe here.
+        //  store the stats on our Zombie struct for simplicity, and call them winCount and lossCount.
+        uint16 winCount;
+        uint16 lossCount;
+        // uint 값 디폴트는 uint32, 이렇게 해서 가스 절약되니까, 16비트, 2^^16승 , 최고 높은숫자=65536
+        //하루에 한번씩 이기면, 179년까지 
+        // uint8 = 256 , 257 되면 에러가 나온다 , 2진수로 저장할 수 있는 숫자 범위, 
+
      } 
     //Structs allow you to create more complicated data types that have multiple properties.
     //state variables are stored permanently in the blockchain
@@ -42,6 +52,9 @@ contract ZombieFactory {
 
 
 // solidity 문서, push 했었을때 자동적으로 리턴값이. array 의 length, 첫번째 좀비를 넣는다면 그것은 zombies array 의 length = 1, 1-1=0. 그걸 id로 쓴다
+// Now that we have new properties on our Zombie struct, we need to change our function definition in _createZombie().
+// Change the zombie creation definition so it creates each new zombie with 0 wins and 0 losses.
+
     function _createZombie(string memory _name, uint _dna) internal {                              
             // adv solidity concepts ch 5
             // update the zombies.push line. add 2 more arguments
@@ -51,7 +64,9 @@ contract ZombieFactory {
             // 지금부터 now+1days 60*60*60 초를 더해준다= readytime, 시간 uint32 
             // now = 1970/1/1 부터 초를 다 더해준 값 , ID 에 더해진다
             // 좀비 구조체 생성해서, zombie push 한다.
-            uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1; 
+
+            // create each new zombie with 0 wins and 0 losses
+            uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime),0,0)) - 1; 
             zombieToOwner[id] = msg.sender;   // 이미 10개좀비 있는 array에 내것 push 하면
             ownerZombieCount[msg.sender]++;   // 키값이 address(lee), 내것처음이면 나의 ownerZombieCount=1, 다른 사람이 7개 좀비 있다면 7
             emit NewZombie(id, _name, _dna); // id= 좀비 어레이 안의 인덱스 숫자로 가져간다. 내 좀비가 어레이에서 11번째라면 그것의 인덱스는 10

@@ -4,22 +4,51 @@ import "./zombiefeeding.sol";
 
 contract ZombieHelper is ZombieFeeding {
 
+  uint levelUpFee = 0.001 ether;
+
   // Start here
   modifier aboveLevel(uint _level, uint _zombieId) {
     require(zombies[_zombieId].level >= _level);
     _;
   }
+  
+    // 1. Create withdraw function here
+    // cast _owner (uint160) as Address payable 
+    // eth 보낼려면 주소가 address payable 타잎 이여야 한다
+    // 그다음 transfer function. address(this).balance = total balance stored on the contract
+    // 만약 buyer 가 overpay 했으면, msg.sender.transfer(msg.value - itemFee);
+
+  function withdraw() external onlyOwner {
+    address payable _owner = address(uint160(owner()));
+    _owner.transfer(address(this).balance);
+
+  }
+
+  // 2. Create setLevelUpFee function here
+  // 0.001 eth, eth 가격이 미래에 오른다면 게임이 너무 비싸다. 
+  // 내가 owner of the contract 로 만들기. levelupFee 컨트롤하기 위하여
+  // 내가 _fee 를 결정한다
+  function setLevelUpFee(uint _fee) external onlyOwner {
+    levelUpFee = _fee;
+  }
+
+  // ++ = operator ,연산자, 좀비 구조체 array 안의 내가 원하는 zombie id 의 좀비가 id 레벨 1씩 오른다. 
+  function levelUp(uint _zombieId) external payable {
+    require(msg.value == levelUpFee);
+    zombies[_zombieId].level++;
+
+
 
   // zombiefactory, mapping (uint => address) public zombieToOwner; _zombieId 가 address
   // calldata = memory, 임시 휘발성, 저장하지 않고. external function 일대만 부른다
   // 매개 변수, 파라미터, 자체가 solidity 안에서 memory 로 판단. 굳이 calldata 안서도 된다.
-  function changeName(uint _zombieId, string calldata _newName) external aboveLevel(2, _zombieId) {
-    require(msg.sender == zombieToOwner[_zombieId]);
+  function changeName(uint _zombieId, string calldata _newName) external aboveLevel(2, _zombieId) ownerOf(_zombieId) {
+    //require(msg.sender == zombieToOwner[_zombieId]); modifier ownerOf takes care of it
     zombies[_zombieId].name = _newName;
   }
 
-  function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) {
-    require(msg.sender == zombieToOwner[_zombieId]);
+  function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) ownerOf(_zombieId) {
+    //require(msg.sender == zombieToOwner[_zombieId]);
     zombies[_zombieId].dna = _newDna;
   }
 
